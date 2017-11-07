@@ -1,0 +1,4 @@
+---
+- name: telinit q
+  become: true
+  shell: telinit q

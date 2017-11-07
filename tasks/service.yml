@@ -7,3 +7,5 @@
     regexp: "^SV:123456:respawn:/sbin/runsvdir-start"
     state: present
     insertafter: EOF
+  notify:
+    - telinit q
