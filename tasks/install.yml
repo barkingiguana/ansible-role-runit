@@ -1,0 +1,43 @@
+---
+- name: Setup Runit repo
+  become: true
+  yum_repository:
+    baseurl: "{{ runit_yum_baseurl }}"
+    description: Runit
+    gpgkey: "{{ runit_yum_gpgkey }}"
+    gpgcheck: "{{ runit_repo_gpg_check  }}"
+    name: Runit
+    sslverify: "{{ runit_yum_sslverify }}"
+  when:
+    - runit_manage_repo
+
+- name: Install Runit
+  become: true
+  package:
+    name: runit
+    state: installed
+
+- name: Create service definition directory
+  become: true
+  file:
+    group: root
+    mode: "u=wrx,go="
+    owner: root
+    path: /etc/sv
+    state: directory
+
+- name: Create default Runit directory
+  become: true
+  file:
+    path: /etc/service
+    state: directory
+    owner: root
+    group: root
+    mode: "u=wrx,go=rx"
+
+- name: Link the Ansible default runit directory to the one that our Runit uses
+  become: true
+  file:
+    dest: /var/service
+    src: /etc/service
+    state: link
