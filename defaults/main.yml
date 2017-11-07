@@ -1,0 +1,6 @@
+---
+runit_yum_baseurl: "https://packagecloud.io/imeyer/runit/el/{{ ansible_distribution_major_version }}/$basearch"
+runit_yum_gpgkey: "https://packagecloud.io/imeyer/runit/gpgkey"
+runit_manage_repo: true
+runit_yum_sslverify: true
+runit_repo_gpg_check: false

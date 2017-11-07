@@ -1,0 +1,9 @@
+---
+- name: Update /etc/inittab
+  become: true
+  lineinfile:
+    dest: /etc/inittab
+    line: "SV:123456:respawn:/sbin/runsvdir-start"
+    regexp: "^SV:123456:respawn:/sbin/runsvdir-start"
+    state: present
+    insertafter: EOF
