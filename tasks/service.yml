@@ -9,3 +9,32 @@
     insertafter: EOF
   notify:
     - telinit q
+
+# Rhel7 : Installs systemd runit.service
+- block:
+
+  - name: create runit.service systemd unit
+    become: true
+    copy:
+      dest: /usr/lib/systemd/system/runit.service
+      src: "runit.service"
+      owner: root
+      group: root
+      mode: "u=wr,go=r"
+
+  - name: Create symlink for runit.service (on multi-user.target.wants)
+    file:
+      path: "/etc/systemd/system/multi-user.target.wants/runit.service"
+      src: "/usr/lib/systemd/system/runit.service"
+      state: link
+      force: yes
+
+  - name: "Ensures Runit service is started and enabled on boot"
+    service:
+      name: "runit"
+      state: started
+      enabled: yes
+
+  when:
+    - ansible_distribution_major_version == "7"
+

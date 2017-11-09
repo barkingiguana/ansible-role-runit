@@ -1,0 +1,14 @@
+[Unit]
+Description=Runit service supervision
+Documentation=http://smarden.org/runit/
+
+[Service]
+Environment="PATH=/usr/local/sbin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin"
+ExecStart=/sbin/runsvdir -P /etc/service 'log: ...........................................................................................................................................................................................................................................................................................................................................................................................................'
+KillSignal=SIGHUP
+KillMode=process
+Restart=always
+SuccessExitStatus=111
+
+[Install]
+WantedBy=multi-user.target
