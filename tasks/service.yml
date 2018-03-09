@@ -9,6 +9,8 @@
     insertafter: EOF
   notify:
     - telinit q
+  when:
+    - runit_manage_inittab
 
 # Rhel7 : Installs systemd runit.service
 - block:
